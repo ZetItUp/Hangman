@@ -64,12 +64,14 @@ namespace Hangman.Screens
         {
             Console.Clear();
             Console.Write("\n\n");
-            DrawDoubleBox(10, 5, Console.WindowWidth - 20, 10, WindowForeground, WindowBackground);
-            Console.SetCursorPosition(0, 7);
+            DrawDoubleBox(10, 3, Console.WindowWidth - 20, 6, WindowForeground, WindowBackground);
+            Console.SetCursorPosition(0, 5);
             ConsoleExt.WriteCentered(Title, ConsoleColor.Yellow, WindowBackground, Console.WindowWidth);
             ConsoleExt.WriteCentered(Description, WindowForeground, WindowBackground, Console.WindowWidth);
-            Console.SetCursorPosition(0, 9);
-            ConsoleExt.WriteCentered("-= Main Menu =-", WindowForeground, ConsoleColor.Black, Console.WindowWidth);
+            Console.SetCursorPosition(0, 10);
+            ConsoleExt.WriteCentered("-= Main Menu =-\n", WindowForeground, ConsoleColor.Black, Console.WindowWidth);
+            ConsoleExt.WriteCentered(options[0], WindowForeground, ConsoleColor.Black, Console.WindowWidth);
+            ConsoleExt.WriteCentered(options[1], WindowForeground, ConsoleColor.Black, Console.WindowWidth);
             Console.SetCursorPosition(0, Console.WindowHeight - 1);
         }
     }

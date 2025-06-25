@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HangmanUtils;
 
 namespace Hangman.Screens
 {
@@ -39,12 +40,11 @@ namespace Hangman.Screens
         private void DrawGame()
         {
             Console.Clear();
-            DrawDoubleBox(0, 0, Console.WindowWidth, Console.WindowHeight, ConsoleColor.DarkBlue, ConsoleColor.Black);
-            Console.SetCursorPosition(2, 1);
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(Title);
+            DrawDoubleBox(0, 0, Console.WindowWidth, Console.WindowHeight, ConsoleColor.White, ConsoleColor.Black);
             Console.SetCursorPosition(2, 3);
-            Console.WriteLine(Description);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            ConsoleExt.WriteCentered(Title, ConsoleColor.Yellow, ConsoleColor.Black, Console.WindowWidth);
+            ConsoleExt.WriteCentered(Description, ConsoleColor.Gray, ConsoleColor.Black, Console.WindowWidth);
         }
     }
 }
