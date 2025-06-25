@@ -43,6 +43,28 @@ namespace Hangman.Screens
 
         protected void DrawDoubleBox(int x, int y, int width, int height, ConsoleColor fgColor = ConsoleColor.Gray, ConsoleColor bgColor = ConsoleColor.Black)
         {
+            if(width < 2 || height < 2)
+            {
+                return;
+            }
+
+            if (x < 0)
+            {
+                x = 0;
+            }
+            if (y < 0)
+            {
+                y = 0;
+            }
+            if (x + width > Console.WindowWidth)
+            {
+                width = Console.WindowWidth - x;
+            }
+            if (y + height > Console.WindowHeight)
+            {
+                height = Console.WindowHeight - y;
+            }
+
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = fgColor;
             Console.BackgroundColor = bgColor;
@@ -61,6 +83,28 @@ namespace Hangman.Screens
 
         protected void DrawBox(int x, int y, int width, int height, ConsoleColor fgColor = ConsoleColor.Gray, ConsoleColor bgColor = ConsoleColor.Black)
         {
+            if (width < 2 || height < 2)
+            {
+                return;
+            }
+
+            if(x < 0)
+            {
+                x = 0;
+            }
+            if(y < 0)
+            {
+                y = 0;
+            }
+            if (x + width > Console.WindowWidth)
+            {
+                width = Console.WindowWidth - x;
+            }
+            if (y + height > Console.WindowHeight)
+            {
+                height = Console.WindowHeight - y;
+            }
+
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = fgColor;
             Console.BackgroundColor = bgColor;

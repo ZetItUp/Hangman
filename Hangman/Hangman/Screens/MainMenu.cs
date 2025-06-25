@@ -20,7 +20,7 @@ namespace Hangman.Screens
 
         public MainMenu()
         {
-            Title = "Hangman 2025";
+            Title = "Hangman";
             Description = "This game was made in C#";
         }
 
@@ -64,12 +64,16 @@ namespace Hangman.Screens
         {
             Console.Clear();
             Console.Write("\n\n");
-            DrawDoubleBox(10, 3, Console.WindowWidth - 20, 6, WindowForeground, WindowBackground);
+            DrawDoubleBox(10, 3, Console.WindowWidth - 20, 7, WindowForeground, WindowBackground);
             Console.SetCursorPosition(0, 5);
             ConsoleExt.WriteCentered(Title, ConsoleColor.Yellow, WindowBackground, Console.WindowWidth);
             ConsoleExt.WriteCentered(Description, WindowForeground, WindowBackground, Console.WindowWidth);
-            Console.SetCursorPosition(0, 10);
-            ConsoleExt.WriteCentered("-= Main Menu =-\n", WindowForeground, ConsoleColor.Black, Console.WindowWidth);
+            Console.WriteLine();
+            ConsoleExt.WriteCentered("Created by ZetItUp, 2025", ConsoleColor.DarkCyan, WindowBackground, Console.WindowWidth);
+            Console.SetCursorPosition(0, 12);
+            DrawBox(Console.WindowWidth / 2 - 14, 12, 27, 6, WindowForeground);
+            Console.SetCursorPosition(0, 12);
+            ConsoleExt.WriteCentered(" Main Menu \n", WindowForeground, ConsoleColor.Black, Console.WindowWidth);
             ConsoleExt.WriteCentered(options[0], WindowForeground, ConsoleColor.Black, Console.WindowWidth);
             ConsoleExt.WriteCentered(options[1], WindowForeground, ConsoleColor.Black, Console.WindowWidth);
             Console.SetCursorPosition(0, Console.WindowHeight - 1);
