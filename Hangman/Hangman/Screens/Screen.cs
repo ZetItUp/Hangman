@@ -15,6 +15,7 @@ namespace Hangman.Screens
         protected bool FirstDraw = true;
         protected int PrevWindowWidth = Console.WindowWidth;
         protected int PrevWindowHeight = Console.WindowHeight;
+        public bool JustEnteredScreen = true;
 
         public Screen()
         {
@@ -24,6 +25,7 @@ namespace Hangman.Screens
         public virtual void Reset()
         {
             FirstDraw = true;
+            JustEnteredScreen = true;
             PrevWindowWidth = Console.WindowWidth;
             PrevWindowHeight = Console.WindowHeight;
         }

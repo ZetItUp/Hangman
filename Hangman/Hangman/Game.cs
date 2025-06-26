@@ -31,6 +31,7 @@ namespace Hangman
             while (running)
             {
                 ScreenManager.Update();
+                Thread.Sleep(10);
             }
         }
     }

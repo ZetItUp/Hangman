@@ -14,6 +14,9 @@ namespace Hangman.Screens
         string guessedLetters = string.Empty;
 
         bool updateWord = true;
+
+        int triesLeft = 6;
+
         public GameScreen()
         {
             Title = "Hangman";
@@ -23,6 +26,19 @@ namespace Hangman.Screens
 
         public override void Update()
         {
+            if (JustEnteredScreen)
+            {
+                Reset();
+                JustEnteredScreen = false;
+
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                }
+
+                return;
+            }
+
             int width = Console.WindowWidth;
             int height = Console.WindowHeight;
 
@@ -38,6 +54,7 @@ namespace Hangman.Screens
             if (FirstDraw)
             {
                 DrawGame();
+                DrawGuessedLetters();
             }
 
 
@@ -45,7 +62,12 @@ namespace Hangman.Screens
             {
                 updateWord = false;
                 DrawWord();
-                DrawGuessedLetters();
+
+                if (CheckVictory())
+                {
+                    DrawVictory();
+                    return;
+                }
             }
 
             if(Console.KeyAvailable)
@@ -56,11 +78,12 @@ namespace Hangman.Screens
                 if(key >= ConsoleKey.A && key <= ConsoleKey.Z)
                 {
                     char guessedLetter = char.ToLower(keyInfo.KeyChar);
-
+                    
                     if(!guessedLetters.Contains(guessedLetter))
                     {
                         guessedLetters += guessedLetter;
                         updateWord = true;
+                        DrawGuessedLetters();
 
                         Console.SetCursorPosition(1, Console.WindowHeight - 9);
                         ConsoleExt.WriteCentered($"                                  ", ConsoleColor.Gray, ConsoleColor.Black, Console.WindowWidth);
@@ -74,6 +97,7 @@ namespace Hangman.Screens
                         {
                             Console.SetCursorPosition(0, Console.WindowHeight - 9);
                             ConsoleExt.WriteCentered($"Wrong guess: {guessedLetter}", ConsoleColor.Red, ConsoleColor.Black, Console.WindowWidth);
+                            triesLeft--;
                         }
                     }
                     else
@@ -83,12 +107,21 @@ namespace Hangman.Screens
                         Console.SetCursorPosition(0, Console.WindowHeight - 9);
                         ConsoleExt.WriteCentered($"You already guessed: {guessedLetter}", ConsoleColor.Yellow, ConsoleColor.Black, Console.WindowWidth);
                     }
+
+                    ShowTriesLeft();
                 }
                 else if (key == ConsoleKey.Escape)
                 {
                     ScreenManager.SetScreen(ScreenManager.ScreenID.MainMenu);
                     Reset();
                 }
+            }
+
+            if(triesLeft <= 0)
+            {
+                DrawGameOver();
+
+                ScreenManager.SetScreen(ScreenManager.ScreenID.MainMenu);
             }
 
             base.Update();
@@ -99,6 +132,17 @@ namespace Hangman.Screens
             base.Reset();
             currentWord = GenerateNewWord();
             updateWord = true;
+            guessedLetters = string.Empty;
+            triesLeft = 6;
+        }
+
+        private void ShowTriesLeft()
+        {
+            Console.SetCursorPosition(3, Console.WindowHeight - 10);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"Tries Left:");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write($" {triesLeft}");
         }
 
         private string GenerateNewWord()
@@ -133,6 +177,58 @@ namespace Hangman.Screens
                     Console.Write("_ ");
                 }
             }
+        }
+
+        private bool CheckVictory()
+        {
+            foreach (char c in currentWord)
+            {
+                if (!guessedLetters.Contains(c.ToString().ToLower()))
+                {
+                    return false; // Not all letters guessed
+                }
+            }
+            return true; // All letters guessed
+        }
+
+        private void DrawVictory()
+        {             
+            DrawBox(2, Console.WindowHeight / 2 - 2, Console.WindowWidth - 4, 5, ConsoleColor.Yellow, ConsoleColor.DarkGreen);
+            Console.SetCursorPosition(4, Console.WindowHeight / 2 - 2);
+            ConsoleExt.WriteCentered(" Y O U   W I N ", ConsoleColor.Yellow, ConsoleColor.DarkGreen, Console.WindowWidth - 4);
+            ConsoleExt.WriteCentered($"The word was: {currentWord.ToUpper()}", ConsoleColor.White, ConsoleColor.DarkGreen, Console.WindowWidth - 4);
+            Console.WriteLine();
+            ConsoleExt.WriteCentered("Press ANY key to return to the main menu.", ConsoleColor.White, ConsoleColor.DarkGreen, Console.WindowWidth - 4);
+            Console.ResetColor();
+            Console.ReadKey(true);
+
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+            }
+
+            ScreenManager.SetScreen(ScreenManager.ScreenID.MainMenu);
+            JustEnteredScreen = true;
+        }
+
+        private void DrawGameOver()
+        {
+            DrawBox(2, Console.WindowHeight / 2 - 2, Console.WindowWidth - 4, 5, ConsoleColor.Yellow, ConsoleColor.DarkRed);
+            Console.SetCursorPosition(4, Console.WindowHeight / 2  - 2);
+            ConsoleExt.WriteCentered(" G A M E   O V E R ", ConsoleColor.Yellow, ConsoleColor.DarkRed, Console.WindowWidth - 4);
+            ConsoleExt.WriteCentered($"The word was: {currentWord.ToUpper()}", ConsoleColor.White, ConsoleColor.DarkRed, Console.WindowWidth - 4);
+            Console.WriteLine();
+            ConsoleExt.WriteCentered("Press ANY key to return to the main menu.", ConsoleColor.White, ConsoleColor.DarkRed, Console.WindowWidth - 4);
+            Console.ResetColor();
+            Console.ReadKey(true);
+
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+            }
+
+            ScreenManager.SetScreen(ScreenManager.ScreenID.MainMenu);
+            JustEnteredScreen = true;
         }
 
         private void DrawGuessedLetters()

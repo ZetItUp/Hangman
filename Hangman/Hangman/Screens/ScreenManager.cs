@@ -11,8 +11,7 @@ namespace Hangman.Screens
         public enum ScreenID
         {
             MainMenu,
-            GameScreen,
-            GameOver
+            GameScreen
         }
 
         private static ScreenID currentScreen = ScreenID.MainMenu;
@@ -39,8 +38,8 @@ namespace Hangman.Screens
             if (screens.ContainsKey(screenID))
             {
                 currentScreen = screenID;
+                screens[currentScreen].JustEnteredScreen = true;
                 screens[currentScreen].Reset();
-                screens[currentScreen].Update();
             }
             else
             {
@@ -57,8 +56,6 @@ namespace Hangman.Screens
                     break;
                 case ScreenID.GameScreen:
                     screens[ScreenID.GameScreen].Update();
-                    break;
-                case ScreenID.GameOver:
                     break;
             }
         }

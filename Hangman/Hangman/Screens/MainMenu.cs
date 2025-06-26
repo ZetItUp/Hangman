@@ -26,6 +26,18 @@ namespace Hangman.Screens
 
         public override void Update()
         {
+            if (JustEnteredScreen)
+            {
+                JustEnteredScreen = false;
+
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                }
+
+                return;
+            }
+
             int width = Console.WindowWidth;
             int height = Console.WindowHeight;
 
@@ -63,6 +75,8 @@ namespace Hangman.Screens
         private void DrawMenu()
         {
             Console.Clear();
+            Console.SetCursorPosition(0, 0);
+
             Console.Write("\n\n");
             DrawDoubleBox(10, 3, Console.WindowWidth - 20, 7, WindowForeground, WindowBackground);
             Console.SetCursorPosition(0, 5);
