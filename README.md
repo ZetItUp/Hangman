@@ -1,7 +1,6 @@
 # Hangman
 This is a Console version of the classic game Hangman written in C#.
-The goal is to give some introduction to graphical usage of C#. This is in no shape or form
-the best practice to do it in, but it works.
+The goal is to give some introduction to graphical usage in console applications using C#. 
 By going through the code and see how things are done, i hope it can give you ideas of how
 to write your own applications with a more "fun" style to them.
 
